@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::section})}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+  
+	<!--<section class="text-center">
+		<h1>ADMIN Profile Page</h1>
+
+		<h4>Name: [[${user.name}]]</h4>
+		<h4>Email: [[${user.email}]]</h4>
+		<h4>Mob No: [[${user.mobileNo}]]</h4>
+		<h4>Role: [[${user.role}]]</h4>
+		<a href="/logout">Logout</a>
+	</section>-->
+	<form action="#" th:action="@{/saveUser}" th:object="${user}"
+            method="POST">
+	<section class="text-center">
+		<h1>List of Users</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+             <!--<th>MobileNo</th>
+             <th>Password</th>
+             <th>Adress</th>-->
+        </tr>
+        <!-- Iterate over the list of users and display them -->
+        <tr th:each="user : ${user}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.email}"></td>
+            
+            
+            <!--<td th:text="${user.email}"></td>
+            <td th:text="${user.mobileNo}"></td>
+            <td  th:text="${user.password}"></td>
+            <td th:text="${user.address}"></td>-->
+             <td>
+                <span id="password_${user.id}"></span>
+            </td>
+            
+            <td>
+                <!-- Edit button -->
+                <button onclick="editUser('${user.id}', '${user.username}', '${user.email}', '${user.password}')">Edit</button>
+            </td>
+            <td>
+                <!--<input type="checkbox" id="reviewCheckbox_${user.id}" name="reviewCheckbox_${user.id}">-->
+                <button id="userId" onclick="showUserInfo('${user.id}', '${user.name}', '${user.email}', '${user.password}')">Select</button>
+            </td>
+        </tr>
+        	
+    </table>
+    <div id="userInfo"></div>
+    <h4><a href="/logout">Logout</a><h4>
+   <script>
+    function maskPassword(password) {
+        return '*'.repeat(password.length); // Replace each character with *
+    }
+    
+    function showUserInfo(userId, username, email, password) {
+        var maskedPassword = maskPassword(password); // Mask the password
+      //  document.getElementById('password_' + userId).innerText = maskedPassword; // Display masked password
+        
+        // Display other user information
+        var userInfoDiv = document.getElementById('userInfo');
+        userInfoDiv.innerHTML = '<h2>User Information</h2>' +
+        
+                                 '<p><strong>ID:</strong> ' + userId + '</p>' +
+                                 '<p><strong>Username:</strong> ' + username + '</p>' +
+                                 '<p><strong>Email:</strong> ' + email + '</p>' +
+                                 '<p><strong>Password:</strong> ' + maskedPassword + '</p>';
+    }
+</script>
+<script>
+    function editUser(userId, username, email, password) {
+        // Display user information for editing
+        var userInfoDiv = document.getElementById('userInfo');
+        userInfoDiv.innerHTML = '<h2>Edit User</h2>' +
+                                 '<input type="hidden" id="editUserId" value="' + userId + '">' +
+                                 '<p><strong>Username:</strong> <input type="text" id="editUsername" value="' + username + '"></p>' +
+                                 '<p><strong>Email:</strong> <input type="text" id="editEmail" value="' + email + '"></p>' +
+                                 '<p><strong>Password:</strong> <input type="text" id="editPassword" value="' + password + '"></p>' +
+                                 '<button onclick="saveUser()">Save</button>';
+    }
+    
+    function saveUser() {
+        // Retrieve edited user information
+        var userId = document.getElementById('editUserId').value;
+        var username = document.getElementById('editUsername').value;
+        var email = document.getElementById('editEmail').value;
+        var password = document.getElementById('editPassword').value;
+        document.getElementById('editUserId').innerText = "User ID: " + userId;
+        // Perform save operation (e.g., send data to server via AJAX)
+        console.log('User information edited:', userId, username, email, password);
+       
+        // Construct the data payload to send to the server
+    var data =JSON.stringify({ 
+        userId: userId,
+        userName: username,
+        userEmail: email
+    });
+       //send data forword 
+       //global.XMLHttpRequest = require('xhr2');
+      //   XMLHttpRequest = require('xhr2');
+       var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/saveDataEndpoint", true); // Endpoint URL
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                // Handle successful response from the server
+                console.log("Data saved successfully!");
+            } else {
+                // Handle error response from the server
+                console.error("Error saving data:", xhr.statusText);
+            }
+        }
+         xhr.send(data);
+        }
+    };
+    xhr.send(JSON.stringify(data));
+        // Clear user information section after save
+       // document.getElementById('userInfo').innerHTML = '';
+    
+</script>
+
+	</section>
+</body>
+</html>

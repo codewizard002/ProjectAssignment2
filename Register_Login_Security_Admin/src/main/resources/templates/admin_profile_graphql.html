@@ -1,0 +1,56 @@
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GraphQL Data Fetching Example</title>
+    <script>
+        function fetchData() {
+            // Define the GraphQL query
+            const query = `
+                {
+                    // Your GraphQL query here
+                    // For example, fetching a list of users
+                    users {
+                        id
+                        name
+                        email
+                    }
+                }
+            `;
+
+            // Make a POST request to the GraphQL API endpoint
+            fetch('https://graphql/graphqls/profile', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // Add any necessary authorization headers here
+                },
+                body: JSON.stringify({ query }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Process the fetched data
+                const users = data.data.users;
+
+                // Display the data on the webpage
+                const userList = document.getElementById('userList');
+                userList.innerHTML = ''; // Clear previous data
+
+                users.forEach(user => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `ID: ${user.id}, Name: ${user.name}, Email: ${user.email}`;
+                    userList.appendChild(listItem);
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+        }
+    </script>
+</head>
+<body>
+    <h1>GraphQL Data Fetching Example</h1>
+    <button onclick="fetchData()">Fetch Data</button>
+    <ul id="userList"></ul>
+</body>
+</html>
+-->

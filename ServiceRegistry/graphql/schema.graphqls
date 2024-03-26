@@ -1,0 +1,29 @@
+
+type Mutation {
+    editUser
+ 
+(id: ID!, input: EditUserInput!): User
+}
+
+input EditUserInput {
+    name: String
+    email: String
+    # Add other fields you want to edit
+}
+
+type Query{
+profile:[User]
+}
+
+
+type User{
+
+id:ID!
+name:String
+mobileNo:String
+email:String
+password:String
+role:String
+address:String
+
+}

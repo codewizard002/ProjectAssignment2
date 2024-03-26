@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::section})}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<section>
+		<div class="container p-3">
+			<div class="row">
+				<div class="col-md-6 offset-md-3">
+					<div class="card">
+						<div class="card-header text-center fs-4">Register Page</div>
+
+
+						<th:block th:if="${session.msg}">
+							<p class="text-center text-success fs-4">[[${session.msg}]]</p>
+							<th:block th:text="${@userServiceImpl.removeSessionMessage()}"></th:block>
+
+						</th:block>
+
+						<div class="card-body">
+							<form action="/saveUser" method="post" >
+								<div class="mb-3">
+									<label>Enter Name</label> <input type="text" name="name"
+										class="form-control" placeholder="Enter your name" required pattern="[A-Za-z]+" title="Username should not contain numbers or special characters"  minlength="5" maxlength="20">
+								</div>
+								<div class="mb-3">
+									<label>Enter Email</label> <input type="email" name="email"
+										class="form-control" placeholder="Enter your email_id">
+								</div>
+
+								<div class="mb-3">
+									<label>Enter Mobile Number</label> <input type="text" name="mobileNo"
+										placeholder="Enter your mobile number" pattern="[0-9]{10}" class="form-control" title="Please enter a 10-digit mobile number">
+								</div>
+
+								<div class="mb-3">
+									<label>Enter Password</label> <input type="password"
+										name="password" class="form-control" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$" title="Password must contain at least one letter, one number, and be at least 6 characters long" required placeholder="Enter password" >
+								</div>
+								<div class="mb-3">
+									<label>Enter Date of Birth</label> <input type="date"
+										placeholder="Enter your date of birth" class="form-control"  name="dob" required>
+								</div>
+								<div class="mb-3">
+									<label>Enter Address</label> </br>
+									<textarea name="address" rows="3" placeholder="Enter your address with postal code"  pattern=".{5,},[0-9]{6}" title="Please enter your address followed by a space and a 6-digit pincode"  required class="form-control"></textarea>
+								</div>
+
+								<button class="btn btn-primary col-md-12">Register</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+
+
+
+
+	</section>
+</body>
+</html>

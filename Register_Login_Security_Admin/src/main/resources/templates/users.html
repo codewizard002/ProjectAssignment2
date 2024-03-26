@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::section})}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	<section class="text-center">
+		<h1>List of Users</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            
+        </tr>
+        <!-- Iterate over the list of users and display them -->
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.username}"></td>
+            <td th:text="${user.email}"></td>
+            <td>
+                <input type="checkbox" th:id="'reviewCheckbox_' + ${user.id}" th:name="'reviewCheckbox_' + ${user.id}">
+                <button onclick="reviewUser('${user.id}')">Select</button>
+            </td>
+        </tr>
+        	
+    </table>
+    <a href="/logout">Logout</a>
+	</section>
+</body>
+</html>
